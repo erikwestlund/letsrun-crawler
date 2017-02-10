@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'expire_days' => 90,
+    'expire_days' => 14,
     'user_agent' => 'LRC Cache pre-load Crawler',
     'archives_start' => '11/12/2013',
     'days_to_ignore' => 7,

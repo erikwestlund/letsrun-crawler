@@ -19,6 +19,13 @@ class UpdateArchivePages {
         $this->end = Carbon::now()->subDays(config('crawler.days_to_ignore'));
     }
 
+    /**
+     * Get all the pages that need to be crawled. Thils includes
+     * pages that have never been crawled, or have not been 
+     * crawled for more than the set expiration time.
+     * 
+     * @return Collection
+     */
     public function pagesToCrawl()
     {
         $expiry = $this->expiry;
@@ -44,14 +51,15 @@ class UpdateArchivePages {
             ->first();
 
         if(empty($last_page)) {
+            // if there's no last page, then start at the beginning of the archive system
             $last_page = $this->start->subDays(1);
             $last_page_timestamp = $last_page->timestamp;
         } else {
+            // otherwise just add pages since the last time it ran
             $last_page_timestamp = Carbon::parse($last_page->date)->timestamp;
         }
-
-        
-        
+              
+        // create the records
         for ($i = $last_page_timestamp; $i <= $this->end->timestamp; $i+=86400) {  
             $date = date("Y/m/d", $i);
 
