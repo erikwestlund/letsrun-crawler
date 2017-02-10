@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('crawl:archives')
-            ->dailyAt('13:06')
+            ->dailyAt('1:00')
             ->timezone('America/Chicago');
     }
 
